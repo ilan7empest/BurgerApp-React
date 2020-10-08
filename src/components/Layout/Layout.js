@@ -5,7 +5,7 @@ const layout = (props) => {
   return (
     <Aux>
       <div>header, sideDrawe, backdrop</div>
-      <main className="flex-grow-1">{props.children}</main>
+      <main className="flex-grow-1 container">{props.children}</main>
       <footer></footer>
     </Aux>
   );
