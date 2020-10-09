@@ -20,7 +20,8 @@ const buildControls = (props) => {
                     add={() => props.addIngredient(control.type)}
                     remove={props.removeIngredient.bind(this, control.type)}
                     disabled={props.disabled[control.type]}/>
-           })}
+            })}
+            <button className={classes.OrderButton + " my-4"} disabled={!props.isPurchase}>ORDER NOW</button>
         </div>
     )
 }
