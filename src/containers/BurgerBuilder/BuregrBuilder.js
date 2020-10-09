@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import Aux from "../../hoc/Auxiliary";
+import Burger from "../../components/Burger/Burger"
 
 class BurgerBuilder extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    ingredients: {
+      cheese: 1,
+      meat: 2,
+      salad: 1,
+      bacon: 3
+    }
   }
 
   render() {
     return (
       <Aux>
-        <div>Burger</div>
+        <Burger ingredients={this.state.ingredients} />
         <div>Build Controls</div>
       </Aux>
     );
