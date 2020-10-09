@@ -8,8 +8,12 @@ const burger = (props) => {
             return [...Array(props.ingredients[ingredientKey])].map((_, i) => {
                 return <BurgerIngredient type={ingredientKey} key={ingredientKey + i} />
             })
-    })
-   
+        }).reduce((prevValue, currValue) => {
+        return prevValue.concat(currValue)
+    }, [])
+    if (ingredientList.length === 0) {
+       ingredientList = <p>Add Ingredient</p>
+   }
     return (
         <div className={classes.Burger}>
             <BurgerIngredient type="bread-top" />
