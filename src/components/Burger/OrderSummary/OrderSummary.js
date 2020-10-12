@@ -22,13 +22,14 @@ const orderSummary = (props) => {
             <div className="modal-body">
                 <ul className="list-group">
                    {ingredientSummary} 
-               </ul>
+                </ul>
+                <h5 className="mt-2">Total Price: ${props.total.toFixed(2)}</h5>
             </div>
             <div className="modal-footer">
                 <Button class="btn btn-danger" click={props.closeModal} type="button">
                     Cancel
                 </Button>
-                <button type="button" className="btn btn-primary">Continue</button>
+                <Button type="button" class="btn btn-primary" click={props.continue}>Continue</Button>
             </div>
         </Aux>
     )
