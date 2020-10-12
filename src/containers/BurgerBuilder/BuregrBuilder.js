@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Aux from "../../hoc/Auxiliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls"
+import Modal from "../../components/UI/Modal/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary"
 
 const INGREDIENT_PRICE = {
     cheese: 0.4,
@@ -34,9 +36,7 @@ class BurgerBuilder extends Component {
   handleAddIngredient = (type) => {
     const oldCount = this.state.ingredients[type];
     const updatedCount = oldCount + 1;
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
+    const updatedIngredients = {...this.state.ingredients};
     updatedIngredients[type] = updatedCount;
     const priceAddition = INGREDIENT_PRICE[type];
     const oldPrice = this.state.totalPrice
@@ -54,9 +54,7 @@ class BurgerBuilder extends Component {
        return;
      }
     const updatedCount = oldCount - 1;
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
+    const updatedIngredients = {...this.state.ingredients};
     updatedIngredients[type] = updatedCount;
     const priceDeduct = INGREDIENT_PRICE[type];
     const oldPrice = this.state.totalPrice
@@ -76,6 +74,9 @@ class BurgerBuilder extends Component {
     }
     return (
       <Aux>
+        <Modal>
+          <OrderSummary ingredients={this.state.ingredients} />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           addIngredient={this.handleAddIngredient}
