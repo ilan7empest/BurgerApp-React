@@ -1,14 +1,24 @@
-import React from "react";
+import React, {Component} from "react";
 import Aux from "../../hoc/Auxiliary";
+import Toolbar from "../Navigation/Toolbar/Toolbar"
 
-const layout = (props) => {
-  return (
-    <Aux>
-      <div>header, sideDrawe, backdrop</div>
-      <main className="flex-grow-1 container">{props.children}</main>
-      <footer>footer</footer>
-    </Aux>
-  );
+class Layout extends Component {
+  state = {
+    showMenu : false
+  }
+  handleToggleMenu = () => {
+    const show = this.state.showMenu
+    this.setState({showMenu: !show})
+  }
+  render() {
+    return (
+      <Aux>
+        <Toolbar show={this.state.showMenu} toggle={this.handleToggleMenu} />
+        <main className="flex-grow-1 mt-2 container">{this.props.children}</main>
+        <footer>footer</footer>
+      </Aux>
+    );
+  }
 };
 
-export default layout;
+export default Layout;
