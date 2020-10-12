@@ -1,15 +1,24 @@
 import React from 'react';
+import Backdrop from "../Backdrop/Backdrop"
+import Aux from "../../../hoc/Auxiliary"
+import classes from "./Modal.css"
 
-const Modal = (props) => {
+const modal = (props) => {
     return (
-        <div className="modal d-block" tabIndex="-1">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    {props.children}
+        <Aux>
+            <Backdrop isVisible={props.isVisible} close={props.closeModal} />
+            <div
+                className={classes.Modal}
+                style={{ transform: props.isVisible ? "translateY(0)" : "translateY(-100vh)", opacity: props.isVisible ? "1" : " 0" }}    
+            >
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        {props.children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Aux>
     )
 }
 
-export default Modal
+export default modal

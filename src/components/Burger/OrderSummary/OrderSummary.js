@@ -1,5 +1,6 @@
 import React from 'react';
 import Aux from "../../../hoc/Auxiliary"
+import Button from "../../UI/Button/Button"
 
 const orderSummary = (props) => {
     const ingredientSummary = Object.keys(props.ingredients).map(key => {
@@ -14,9 +15,9 @@ const orderSummary = (props) => {
         <Aux>
             <div className="modal-header">
                 <h5 className="modal-title">Order Summary</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <Button class="close" click={props.closeModal} type="button">
+                    <span aria-hidden="true">&times;</span>
+                </Button>
             </div>
             <div className="modal-body">
                 <ul className="list-group">
@@ -24,8 +25,10 @@ const orderSummary = (props) => {
                </ul>
             </div>
             <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+                <Button class="btn btn-danger" click={props.closeModal} type="button">
+                    Cancel
+                </Button>
+                <button type="button" className="btn btn-primary">Continue</button>
             </div>
         </Aux>
     )
