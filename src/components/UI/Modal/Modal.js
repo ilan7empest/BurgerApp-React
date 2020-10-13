@@ -15,8 +15,8 @@ class Modal extends Component {
         <Aux>
             <Backdrop isVisible={this.props.isVisible} close={this.props.closeModal} />
             <div
-                className={classes.Modal}
-                style={{ transform: this.props.isVisible ? "translateY(0)" : "translateY(-100vh)", opacity: this.props.isVisible ? "1" : " 0" }}    
+                className={this.props.isVisible ? `${classes.Modal}  ${classes.show}` : classes.Modal}
+                // style={{ transform: this.props.isVisible ? "translateY(0)" : "translateY(-100vh)", opacity: this.props.isVisible ? "1" : " 0" }}    
             >
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
