@@ -5,6 +5,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls"
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary"
 import axiosInstance from "../../axios-orders"
+import {Spinner} from "../../components/UI/Spinner/Spinner"
 
 
 const INGREDIENT_PRICE = {
@@ -23,7 +24,8 @@ class BurgerBuilder extends Component {
     },
     totalPrice: 4,
     purchasable: false,
-    purchasing: false
+    purchasing: false,
+    loading: false
   }
   updatePurchaseState(ingredients)  {
     const sum = Object.keys(ingredients)//array of prop names ["cheese", "meat"]
@@ -82,7 +84,7 @@ class BurgerBuilder extends Component {
   }
 
   handleContinuePurchase = () => {
-    console.log("sadasds")
+    this.setState({ loading: true });
     const Order = {
       ingredients: this.state.ingredients,
       price: this.state.totalPrice.toFixed(2),
@@ -94,7 +96,12 @@ class BurgerBuilder extends Component {
       },
       deliveryMethod: "Take Away" 
     }
-    axiosInstance.post("/orders.json", Order).then(order => console.log(order))
+    axiosInstance.post("/orders.json", Order).then(order => {
+      this.setState({ loading: false, purchasing: false });
+      console.log(order)
+    }).catch(() => {
+      this.setState({ loading: false, purchasing: false });
+    })
   }
 
   render() {
@@ -102,14 +109,20 @@ class BurgerBuilder extends Component {
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <=0
     }
-    return (
-      <Aux>
-        <Modal isVisible={this.state.purchasing} closeModal={this.handleCloseModal}>
-          <OrderSummary
+    let orderSummary = (
+      <OrderSummary
             ingredients={this.state.ingredients}
             closeModal={this.handleCloseModal}
             continue={this.handleContinuePurchase}
             total={this.state.totalPrice} />
+    )
+    if (this.state.loading) {
+      orderSummary =  <Spinner />
+    }
+    return (
+      <Aux>
+        <Modal isVisible={this.state.purchasing} closeModal={this.handleCloseModal}>
+          {orderSummary}          
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls

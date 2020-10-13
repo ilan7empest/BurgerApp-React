@@ -5,7 +5,7 @@ import classes from "./Modal.css"
 
 class Modal extends Component {
      shouldComponentUpdate(nextProp, nextStste) {
-         return nextProp.isVisible !== this.props.isVisible
+         return nextProp.isVisible !== this.props.isVisible || nextProp.children !== this.props.children
     }
     componentDidUpdate() {
         console.log("Modal Update")
