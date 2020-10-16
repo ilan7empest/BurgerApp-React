@@ -8,8 +8,21 @@ class Checkout extends Component {
       salad: 1,
     },
   };
+  cancelOrder = () => {
+    this.props.history.goBack();
+  };
+
+  handleFinishPurchase = () => {
+    this.props.history.replace('/checkout/contact-data');
+  };
   render() {
-    return <CheckoutSummary ingredients={this.state.ingredients} />;
+    return (
+      <CheckoutSummary
+        cancel={this.cancelOrder}
+        checkout={this.handleFinishPurchase}
+        ingredients={this.state.ingredients}
+      />
+    );
   }
 }
 
