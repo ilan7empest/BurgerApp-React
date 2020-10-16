@@ -9,7 +9,7 @@ const navItems = (props) => (
       </NavLink>
     </li>
     <li className='nav-item'>
-      <NavLink className='nav-link' to='/orders' exact>
+      <NavLink className='nav-link' to='/checkout' exact>
         Checkout
       </NavLink>
     </li>
