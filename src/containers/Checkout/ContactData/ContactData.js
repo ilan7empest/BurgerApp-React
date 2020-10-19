@@ -6,11 +6,71 @@ import { Spinner } from '../../../components/UI/Spinner/Spinner';
 
 class ContactData extends Component {
   state = {
-    name: '',
-    email: '',
-    address: {
-      street: '',
-      postcode: '',
+    orderForm: {
+      name: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          class: 'form-control',
+          name: 'name',
+          id: 'name',
+          placeholder: 'Your Name',
+        },
+        value: '',
+      },
+      email: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'email',
+          class: 'form-control',
+          name: 'email',
+          id: 'email',
+          placeholder: 'Your Email',
+        },
+        value: '',
+      },
+      street: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          class: 'form-control',
+          name: 'street',
+          id: 'street',
+          placeholder: 'Your Street Address',
+        },
+        value: '',
+      },
+      postcode: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'number',
+          class: 'form-control',
+          name: 'postcode',
+          id: 'postcode',
+          placeholder: 'Your Postal Code',
+        },
+        value: '',
+      },
+      deliveryMethod: {
+        elementType: 'select',
+        elementConfig: {
+          options: [
+            {
+              value: 'fastest',
+              displayValue: 'Fastest',
+            },
+            {
+              value: 'cheapest',
+              displayValue: 'Cheapest',
+            },
+            {
+              value: 'takeaway',
+              displayValue: 'Take Away',
+            },
+          ],
+        },
+        value: '',
+      },
     },
     loading: false,
   };
@@ -21,15 +81,6 @@ class ContactData extends Component {
     const Order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
-      customer: {
-        name: this.state.name,
-        email: this.state.email,
-        address: {
-          street: this.state.street,
-          postcode: this.state.postcode,
-        },
-      },
-      deliveryMethod: 'Take Away',
     };
     axiosInstance
       .post('/orders.json', Order)
@@ -61,13 +112,9 @@ class ContactData extends Component {
         <div className='form-row'>
           <div className='form-group col-md-6'>
             <Input
-              inputtype='text'
-              type='text'
-              class='form-control'
-              name='name'
-              id='name'
-              value={this.state.value}
-              placeholder='Your Name'
+              elementType=''
+              elementConfig=''
+              value=''
               change={(e) => this.handleData(e)}
             />
           </div>
