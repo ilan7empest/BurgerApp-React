@@ -9,10 +9,15 @@ const navItems = (props) => (
       </NavLink>
     </li>
     <li className='nav-item'>
+      <NavLink className='nav-link' to='/Orders' exact>
+        Orders
+      </NavLink>
+    </li>
+    {/* <li className='nav-item'>
       <NavLink className='nav-link' to='/checkout' exact>
         Checkout
       </NavLink>
-    </li>
+    </li> */}
   </ul>
 );
 
