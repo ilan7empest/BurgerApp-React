@@ -11,7 +11,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          class: 'form-control',
+          className: 'form-control',
           name: 'name',
           id: 'name',
           placeholder: 'Your Name',
@@ -22,7 +22,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'email',
-          class: 'form-control',
+          className: 'form-control',
           name: 'email',
           id: 'email',
           placeholder: 'Your Email',
@@ -33,7 +33,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          class: 'form-control',
+          className: 'form-control',
           name: 'street',
           id: 'street',
           placeholder: 'Your Street Address',
@@ -44,7 +44,7 @@ class ContactData extends Component {
         elementType: 'input',
         elementConfig: {
           type: 'number',
-          class: 'form-control',
+          className: 'form-control',
           name: 'postcode',
           id: 'postcode',
           placeholder: 'Your Postal Code',
@@ -78,13 +78,18 @@ class ContactData extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
+    let formData = {};
+    for (let key in this.state.orderForm) {
+      formData[key] = this.state.orderForm[key].value;
+    }
     const Order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
+      orderData: formData,
     };
     axiosInstance
       .post('/orders.json', Order)
-      .then((order) => {
+      .then(() => {
         this.setState({ loading: false });
         this.props.history.push('/');
       })
@@ -93,66 +98,41 @@ class ContactData extends Component {
       });
   };
 
-  handleData(e) {
+  handleData = (e, el) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    if (name === 'street' || name === 'postcode') {
-      this.setState({ address: { [name]: value } });
-    } else {
-      this.setState({ [name]: value });
-    }
-  }
+    const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = { ...updatedOrderForm[el] };
+    updatedFormElement.value = e.target.value;
+    updatedOrderForm[el] = updatedFormElement;
+    this.setState({ orderForm: updatedOrderForm });
+  };
   render() {
+    const formElementsArray = [];
+    for (let key in this.state.orderForm) {
+      formElementsArray.push({
+        id: key,
+        config: this.state.orderForm[key],
+      });
+    }
     let form = (
       <form
         className='mt-3 shadow rounded p-3 p-md-5'
-        onSubmit={(e) => this.handleSubmit(e)}
+        onSubmit={this.handleSubmit}
       >
         <h3 className='mb-4'>Fill up your details</h3>
         <div className='form-row'>
-          <div className='form-group col-md-6'>
-            <Input
-              elementType=''
-              elementConfig=''
-              value=''
-              change={(e) => this.handleData(e)}
-            />
-          </div>
-          <div className='form-group col-md-6'>
-            <Input
-              type='email'
-              class='form-control'
-              name='email'
-              id='email'
-              value={this.state.value}
-              placeholder='Your Email'
-              change={(e) => this.handleData(e)}
-            />
-          </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-group col-md-6'>
-            <Input
-              type='text'
-              class='form-control'
-              name='street'
-              id='street'
-              value={this.state.value}
-              placeholder='Your Street Address'
-              change={(e) => this.handleData(e)}
-            />
-          </div>
-          <div className='form-group col-md-6'>
-            <Input
-              type='number'
-              class='form-control'
-              name='postcode'
-              id='postcode'
-              value={this.state.value}
-              placeholder='Your Postal Code'
-              change={(e) => this.handleData(e)}
-            />
-          </div>
+          {formElementsArray.map((el) => {
+            return (
+              <div className='form-group col-md-6' key={el.id}>
+                <Input
+                  elementtype={el.config.elementType}
+                  elementConfig={el.config.elementConfig}
+                  value={el.config.value}
+                  change={(e) => this.handleData(e, el.id)}
+                />
+              </div>
+            );
+          })}
         </div>
         <Button class='btn btn-primary'>Submit</Button>
       </form>
