@@ -7,6 +7,7 @@ const checkoutSummary = (props) => {
     <div className='text-center'>
       <h1 className='mb-5'>Enjoy your food</h1>
       <Burger ingredients={props.ingredients} />
+      <p>Total Price: {props.price.toFixed(2)}</p>
       <Button type='button' class='btn btn-danger mr-4' click={props.cancel}>
         Cancel
       </Button>
