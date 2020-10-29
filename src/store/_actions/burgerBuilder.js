@@ -30,7 +30,6 @@ export const fetchIngredients = (ingr) => {
 export const fetchIngredientsFail = () => {
   return {
     type: actionTypes.FETCH_INGREDIENTS_FAIL,
-    // error: error,
   };
 };
 export const initIngredients = () => {
