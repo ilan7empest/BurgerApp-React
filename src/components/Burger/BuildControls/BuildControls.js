@@ -4,10 +4,10 @@ import classes from './BuildControls.css';
 import Button from '../../UI/Button/Button';
 
 const controls = [
-  { label: 'Salad', type: 'salad' },
-  { label: 'Cheese', type: 'cheese' },
-  { label: 'Bacon', type: 'bacon' },
-  { label: 'Meat', type: 'meat' },
+  { label: 'Salad', name: 'salad' },
+  { label: 'Cheese', name: 'cheese' },
+  { label: 'Bacon', name: 'bacon' },
+  { label: 'Meat', name: 'meat' },
 ];
 
 const buildControls = (props) => {
@@ -21,9 +21,9 @@ const buildControls = (props) => {
           <BuildControl
             label={control.label}
             key={control.label}
-            add={() => props.addIngredient(control.type)}
-            remove={() => props.removeIngredient(control.type)}
-            disabled={props.disabled[control.type]}
+            add={() => props.addIngredient(control.name)}
+            remove={() => props.removeIngredient(control.name)}
+            disabled={props.disabled[control.name]}
           />
         );
       })}

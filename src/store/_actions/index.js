@@ -1,2 +1,2 @@
-export const ADD_INGERDIANT = 'ADD_INGERDIANT';
-export const REMOVE_INGERDIANT = 'REMOVE_INGERDIANT';
+export { addIngredient, removeIngredient } from './burgerBuilder';
+export {} from './order';
