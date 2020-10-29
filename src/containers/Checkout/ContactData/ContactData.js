@@ -2,8 +2,10 @@ import React, { Component, Fragment } from 'react';
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
 import axiosInstance from '../../../axios-orders';
+import * as actionCreator from '../../../store/_actions';
 import { Spinner } from '../../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 
 class ContactData extends Component {
   state = {
@@ -117,7 +119,7 @@ class ContactData extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
+    // this.setState({ loading: true });
     let formData = {};
     for (let key in this.state.orderForm) {
       formData[key] = this.state.orderForm[key].value;
@@ -125,17 +127,18 @@ class ContactData extends Component {
     const Order = {
       ingredients: this.props.ingr,
       price: this.props.price,
-      orderData: formData,
+      costumerDetails: formData,
     };
-    axiosInstance
-      .post('/orders.json', Order)
-      .then(() => {
-        this.setState({ loading: false });
-        this.props.history.push('/');
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      });
+    this.props.onSubmitOrder(Order);
+    // axiosInstance
+    //   .post('/orders.json', Order)
+    //   .then(() => {
+    //     this.setState({ loading: false });
+    //     this.props.history.push('/');
+    //   })
+    //   .catch(() => {
+    //     this.setState({ loading: false });
+    //   });
   };
 
   handleData = (e, el) => {
@@ -202,9 +205,19 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ingr: state.ingredients,
-    price: state.totalPrice,
+    ingr: state.burgerReducer.ingredients,
+    price: state.burgerReducer.totalPrice,
+    // loading: state.orderRducer.loading,
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSubmitOrder: (data) => dispatch(actionCreator.submitOrderStart(data)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withErrorHandler(ContactData, axiosInstance));
