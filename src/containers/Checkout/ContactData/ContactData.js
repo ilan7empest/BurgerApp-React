@@ -96,7 +96,6 @@ class ContactData extends Component {
         valid: true,
       },
     },
-    loading: false,
     formIsValid: false,
   };
 
@@ -196,7 +195,7 @@ class ContactData extends Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
     return <Fragment>{form}</Fragment>;
@@ -207,13 +206,13 @@ const mapStateToProps = (state) => {
   return {
     ingr: state.burgerReducer.ingredients,
     price: state.burgerReducer.totalPrice,
-    // loading: state.orderRducer.loading,
+    loading: state.orderReducer.loading,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmitOrder: (data) => dispatch(actionCreator.submitOrderStart(data)),
+    onSubmitOrder: (data) => dispatch(actionCreator.submitOrder(data)),
   };
 };
 

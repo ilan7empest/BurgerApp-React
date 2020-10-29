@@ -16,8 +16,15 @@ export const submitOrderFail = (error) => {
   };
 };
 
-export const submitOrderStart = (orderData) => {
+export const submitOrderStart = () => {
+  return {
+    type: actionTypes.SUBMIT_ORDER_START,
+  };
+};
+
+export const submitOrder = (orderData) => {
   return (dispatch) => {
+    dispatch(submitOrderStart());
     axiosInstance
       .post('/orders.json', orderData)
       .then((res) => {

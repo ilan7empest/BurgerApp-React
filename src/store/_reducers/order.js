@@ -7,6 +7,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SUBMIT_ORDER_START:
+      return {
+        ...state,
+        loading: true,
+      };
     case actionTypes.SUBMIT_ORDER_SUCCESS:
       const newOrder = {
         ...action.payload,
