@@ -21,20 +21,10 @@ class BurgerBuilder extends Component {
   state = {
     purchasing: false,
     loading: false,
-    error: false,
   };
 
   componentDidMount() {
-    console.log(this.props.ingr);
-    axiosInstance
-      .get('ingredients.json')
-      .then((res) => {
-        // this.setState({ ingredients: res.data });
-        console.log(res.data);
-      })
-      .catch((err) => {
-        this.setState({ error: true });
-      });
+    this.props.handleFetchIngerients();
   }
   updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients) //array of prop names ["cheese", "meat"]
@@ -113,7 +103,7 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let orderSummary = null;
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>ingredients cant be loaded</p>
     ) : (
       <Spinner />
@@ -163,6 +153,7 @@ const mapStateToProps = (state) => {
   return {
     ingr: state.burgerReducer.ingredients,
     totalPrice: state.burgerReducer.totalPrice,
+    error: state.burgerReducer.error,
   };
 };
 
@@ -172,6 +163,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actionCreator.addIngredient(name, INGREDIENT_PRICE)),
     handleRemoveIngredient: (name) =>
       dispatch(actionCreator.removeIngredient(name, INGREDIENT_PRICE)),
+    handleFetchIngerients: () => {
+      dispatch(actionCreator.initIngredients());
+    },
   };
 };
 
