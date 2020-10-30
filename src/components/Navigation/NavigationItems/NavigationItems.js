@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const navItems = (props) => (
-  <ul className='navbar-nav mr-auto'>
-    <li className='nav-item'>
-      <NavLink className='nav-link' to='/' exact>
-        Burger Builder
-      </NavLink>
-    </li>
-    <li className='nav-item'>
-      <NavLink className='nav-link' to='/Orders' exact>
-        Orders
-      </NavLink>
-    </li>
-    {/* <li className='nav-item'>
+  <Fragment>
+    <ul className='navbar-nav mr-auto'>
+      <li className='nav-item'>
+        <NavLink className='nav-link' to='/' exact>
+          Burger Builder
+        </NavLink>
+      </li>
+      <li className='nav-item'>
+        <NavLink className='nav-link' to='/Orders' exact>
+          Orders
+        </NavLink>
+      </li>
+      {/* <li className='nav-item'>
       <NavLink className='nav-link' to='/checkout' exact>
         Checkout
       </NavLink>
     </li> */}
-  </ul>
+    </ul>
+    <ul className='navbar-nav'>
+      <li className='nav-item'>
+        <NavLink to='/auth' className='nav-link'>
+          Signup
+        </NavLink>
+      </li>
+    </ul>
+  </Fragment>
 );
 
 export default navItems;

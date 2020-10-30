@@ -59,7 +59,11 @@ const input = (props) => {
 
   return (
     <Fragment>
-      <label htmlFor={props.name}>{props.placeholder}</label>
+      {props.elementConfig.label ? (
+        <label htmlFor={props.elementConfig.name}>
+          {props.elementConfig.label}
+        </label>
+      ) : null}
       {inputEle}
     </Fragment>
   );
