@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import axiosInstance from '../../axios-orders';
+import { connect } from 'react-redux';
+import * as actionCreator from '../../store/_actions';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 class Auth extends Component {
   state = {
@@ -121,7 +124,7 @@ class Auth extends Component {
       formIsValid: formValid,
     });
 
-    console.log(updatedControls);
+    // console.log(updatedControls);
   };
 
   handleOnSubmit = (e) => {
@@ -133,10 +136,7 @@ class Auth extends Component {
     }
     // console.log(userDetails);
     //post user to db
-    axiosInstance
-      .post('user.json', userDetails)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    this.props.onSubmitForm(userDetails);
   };
   render() {
     const formControlArray = [];
@@ -175,4 +175,19 @@ class Auth extends Component {
   }
 }
 
-export default Auth;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.auth.loading,
+  };
+};
+
+const mapDispacthToProps = (dispatch) => {
+  return {
+    onSubmitForm: (user) => dispatch(actionCreator.signup(user)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispacthToProps,
+)(withErrorHandler(Auth, axiosInstance));
