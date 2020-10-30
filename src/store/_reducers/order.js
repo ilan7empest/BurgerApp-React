@@ -1,4 +1,5 @@
 import * as actionTypes from '../_actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   orders: [],
@@ -9,31 +10,18 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SUBMIT_ORDER_INIT:
-      return {
-        ...state,
-        purchased: false,
-      };
+      return updateObject(state, { purchased: false });
     case actionTypes.SUBMIT_ORDER_START:
-      return {
-        ...state,
-        loading: true,
-      };
+      return updateObject(state, { loading: true });
     case actionTypes.SUBMIT_ORDER_SUCCESS:
-      const newOrder = {
-        ...action.payload,
-        id: action.orderId,
-      };
-      return {
-        ...state,
+      const newOrder = updateObject(action.payload, { id: action.orderId });
+      return updateObject(state, {
         orders: state.orders.concat(newOrder),
         loading: false,
         purchased: true,
-      };
+      });
     case actionTypes.SUBMIT_ORDER_FAIL:
-      return {
-        ...state,
-        loading: false,
-      };
+      return updateObject(state, { loading: false });
     default:
       return state;
   }
