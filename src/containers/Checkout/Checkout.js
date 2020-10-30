@@ -35,7 +35,7 @@ class Checkout extends Component {
     let summary = <Redirect to='/' />;
     if (this.props.ingr) {
       const purchasedRedirect = this.props.purchased ? (
-        <Redirect to='/' />
+        <Redirect to='/Orders' />
       ) : null;
       summary = (
         <Fragment>
