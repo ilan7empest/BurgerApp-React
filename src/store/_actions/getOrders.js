@@ -19,6 +19,13 @@ export const fetchOrdersFail = (err) => {
   };
 };
 
+export const deleteOrder = (orderId) => {
+  return {
+    type: actionTypes.DELETE_ORDER,
+    orderId: orderId,
+  };
+};
+
 export const fetchOrdersInit = () => {
   return (dispatch) => {
     dispatch(fetchOrdersStart());

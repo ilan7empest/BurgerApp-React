@@ -5,6 +5,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import { connect } from 'react-redux';
 import * as actionCreator from '../../store/_actions';
 import { Spinner } from '../../components/UI/Spinner/Spinner';
+import Button from '../../components/UI/Button/Button';
 
 class Orders extends Component {
   componentDidMount() {
@@ -38,6 +39,13 @@ class Orders extends Component {
           <div>
             Total Price: <b>${order.price}</b>
           </div>
+          <Button
+            class='btn btn-danger'
+            click={() => this.props.onOrderDelete(order.id)}
+            type='button'
+          >
+            Delete Order
+          </Button>
         </div>
       ))
     );
@@ -56,6 +64,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onOrdersInit: () => dispatch(actionCreator.fetchOrdersInit()),
+    onOrderDelete: (id) => dispatch(actionCreator.deleteOrder(id)),
   };
 };
 
