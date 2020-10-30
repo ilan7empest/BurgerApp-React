@@ -36,3 +36,9 @@ export const submitOrder = (orderData) => {
       });
   };
 };
+
+export const submitOrderInit = () => {
+  return {
+    type: actionTypes.SUBMIT_ORDER_INIT,
+  };
+};

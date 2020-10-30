@@ -94,6 +94,7 @@ class BurgerBuilder extends Component {
     //   pathname: '/checkout',
     //   search: `?${querySring.join('&')}`,
     // });
+    this.props.onInitPurchase();
     this.props.history.push('/checkout');
   };
 
@@ -166,6 +167,7 @@ const mapDispatchToProps = (dispatch) => {
     handleFetchIngerients: () => {
       dispatch(actionCreator.initIngredients());
     },
+    onInitPurchase: () => dispatch(actionCreator.submitOrderInit()),
   };
 };
 
