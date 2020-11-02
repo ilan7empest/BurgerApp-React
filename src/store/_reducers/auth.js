@@ -32,6 +32,12 @@ const reducer = (state = initialState, action) => {
         error: action.error,
         loading: false,
       });
+    case actionTypes.LOGOUT: {
+      return updateObject(state, {
+        tokenId: null,
+        userId: null,
+      });
+    }
     default:
       return state;
   }

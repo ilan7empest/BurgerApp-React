@@ -9,7 +9,7 @@ import Button from '../../components/UI/Button/Button';
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onOrdersInit();
+    this.props.onOrdersInit(this.props.tokenId);
     // axiosInstance
     //   .get('orders.json')
     //   .then((res) => {
@@ -58,12 +58,13 @@ const mapStateToProps = (state) => {
   return {
     orders: state.getOrdersReducer.orders,
     loading: state.getOrdersReducer.loading,
+    tokenId: state.auth.tokenId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrdersInit: () => dispatch(actionCreator.fetchOrdersInit()),
+    onOrdersInit: (toekn) => dispatch(actionCreator.fetchOrdersInit(toekn)),
     onOrderDelete: (id) => dispatch(actionCreator.deleteOrder(id)),
   };
 };

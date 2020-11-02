@@ -10,24 +10,24 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 class Auth extends Component {
   state = {
     controls: {
-      username: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          name: 'username',
-          id: 'name',
-          placeholder: 'Your Name',
-          label: 'Username:',
-          required: true,
-        },
-        value: '',
-        validation: {
-          required: true,
-          minLength: 3,
-        },
-        valid: false,
-        touched: false,
-      },
+      // username: {
+      //   elementType: 'input',
+      //   elementConfig: {
+      //     type: 'text',
+      //     name: 'username',
+      //     id: 'name',
+      //     placeholder: 'Your Name',
+      //     label: 'Username:',
+      //     required: true,
+      //   },
+      //   value: '',
+      //   validation: {
+      //     required: true,
+      //     minLength: 3,
+      //   },
+      //   valid: false,
+      //   touched: false,
+      // },
       email: {
         elementType: 'input',
         elementConfig: {

@@ -26,11 +26,11 @@ export const deleteOrder = (orderId) => {
   };
 };
 
-export const fetchOrdersInit = () => {
+export const fetchOrdersInit = (token) => {
   return (dispatch) => {
     dispatch(fetchOrdersStart());
     axiosInstance
-      .get('orders.json')
+      .get('orders.json?auth=' + token)
       .then((res) => {
         const fetchOrders = [];
         for (let key in res.data) {

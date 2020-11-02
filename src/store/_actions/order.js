@@ -22,11 +22,11 @@ export const submitOrderStart = () => {
   };
 };
 
-export const submitOrder = (orderData) => {
+export const submitOrder = (token, orderData) => {
   return (dispatch) => {
     dispatch(submitOrderStart());
     axiosInstance
-      .post('/orders.json', orderData)
+      .post('/orders.json?auth=' + token, orderData)
       .then((res) => {
         dispatch(submitOrderSuccess(res.data.name, orderData));
         // this.props.history.push('/');

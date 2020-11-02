@@ -128,7 +128,7 @@ class ContactData extends Component {
       price: this.props.price.toFixed(2),
       costumerDetails: formData,
     };
-    this.props.onSubmitOrder(Order);
+    this.props.onSubmitOrder(this.props.token, Order);
     // axiosInstance
     //   .post('/orders.json', Order)
     //   .then(() => {
@@ -207,12 +207,14 @@ const mapStateToProps = (state) => {
     ingr: state.burgerReducer.ingredients,
     price: state.burgerReducer.totalPrice,
     loading: state.orderReducer.loading,
+    token: state.auth.tokenId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmitOrder: (data) => dispatch(actionCreator.submitOrder(data)),
+    onSubmitOrder: (token, data) =>
+      dispatch(actionCreator.submitOrder(token, data)),
   };
 };
 
