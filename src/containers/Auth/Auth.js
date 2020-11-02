@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import { Spinner } from '../../components/UI/Spinner/Spinner';
@@ -181,11 +182,17 @@ class Auth extends Component {
       errorMsg = <p className='text-danger'>{this.props.error.message}</p>;
     }
 
+    let authRedirect = null;
+    if (this.props.token) {
+      authRedirect = <Redirect to='/' />;
+    }
+
     return (
       <form
         className='mt-3 shadow rounded p-3 p-md-5 d-inline-flex flex-column'
         onSubmit={(e) => this.handleOnSubmit(e)}
       >
+        {authRedirect}
         {errorMsg}
         {createFields}
 
@@ -205,6 +212,7 @@ const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
+    token: state.auth.tokenId !== null,
   };
 };
 

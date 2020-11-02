@@ -9,11 +9,13 @@ const navItems = (props) => (
           Burger Builder
         </NavLink>
       </li>
-      <li className='nav-item'>
-        <NavLink className='nav-link' to='/Orders' exact>
-          Orders
-        </NavLink>
-      </li>
+      {props.isAuth ? (
+        <li className='nav-item'>
+          <NavLink className='nav-link' to='/Orders' exact>
+            Orders
+          </NavLink>
+        </li>
+      ) : null}
       {/* <li className='nav-item'>
       <NavLink className='nav-link' to='/checkout' exact>
         Checkout
