@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import { Spinner } from '../../components/UI/Spinner/Spinner';
 import axiosInstance from '../../axios-orders';
 import { connect } from 'react-redux';
 import * as actionCreator from '../../store/_actions';
@@ -17,6 +18,7 @@ class Auth extends Component {
           id: 'name',
           placeholder: 'Your Name',
           label: 'Username:',
+          required: true,
         },
         value: '',
         validation: {
@@ -34,6 +36,7 @@ class Auth extends Component {
           id: 'email',
           placeholder: 'Your Email',
           label: 'Email:',
+          required: true,
         },
         value: '',
         validation: {
@@ -51,6 +54,7 @@ class Auth extends Component {
           id: 'password',
           placeholder: 'Your Password',
           label: 'Password:',
+          required: true,
         },
         value: '',
         validation: {
@@ -154,7 +158,7 @@ class Auth extends Component {
       });
     }
 
-    const createFields = formControlArray.map((field) => (
+    let createFields = formControlArray.map((field) => (
       <div className='form-group' key={field.name}>
         <Input
           elementtype={field.controlConfig.elementType}
@@ -167,11 +171,22 @@ class Auth extends Component {
         />
       </div>
     ));
+    if (this.props.loading) {
+      createFields = <Spinner />;
+    }
+
+    let errorMsg = null;
+
+    if (this.props.error) {
+      errorMsg = <p className='text-danger'>{this.props.error.message}</p>;
+    }
+
     return (
       <form
         className='mt-3 shadow rounded p-3 p-md-5 d-inline-flex flex-column'
         onSubmit={(e) => this.handleOnSubmit(e)}
       >
+        {errorMsg}
         {createFields}
 
         <Button class='btn btn-primary' disabled={!this.state.formIsValid}>
@@ -189,6 +204,7 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
   return {
     loading: state.auth.loading,
+    error: state.auth.error,
   };
 };
 

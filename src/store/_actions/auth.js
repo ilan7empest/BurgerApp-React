@@ -31,9 +31,11 @@ export const auth = (userDetails, isSignup) => {
       )
       //   .post('user.json', userDetails)
       .then((res) => {
-        console.log(res);
         dispatch(signupSuccess(res.data));
       })
-      .catch((err) => dispatch(signupFail(err)));
+      .catch((err) => {
+        console.log(err.response);
+        dispatch(signupFail(err.response.data.error));
+      });
   };
 };
