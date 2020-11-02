@@ -63,6 +63,7 @@ class Auth extends Component {
       },
     },
     formIsValid: false,
+    isSignup: true,
   };
 
   checkValidation = (value, validationRules) => {
@@ -136,7 +137,13 @@ class Auth extends Component {
     }
     // console.log(userDetails);
     //post user to db
-    this.props.onSubmitForm(userDetails);
+    this.props.onSubmitForm(userDetails, this.state.isSignup);
+  };
+  handleAuthModeSwitch = (e) => {
+    e.preventDefault();
+    this.setState((preState) => {
+      return { isSignup: !preState.isSignup };
+    });
   };
   render() {
     const formControlArray = [];
@@ -168,7 +175,11 @@ class Auth extends Component {
         {createFields}
 
         <Button class='btn btn-primary' disabled={!this.state.formIsValid}>
-          Signup
+          {this.state.isSignup ? 'Signup' : 'Login'}
+        </Button>
+
+        <Button class='btn btn-danger mt-4' click={this.handleAuthModeSwitch}>
+          Switch To {this.state.isSignup ? 'Login' : 'Signup'}
         </Button>
       </form>
     );
@@ -183,7 +194,8 @@ const mapStateToProps = (state) => {
 
 const mapDispacthToProps = (dispatch) => {
   return {
-    onSubmitForm: (user) => dispatch(actionCreator.signup(user)),
+    onSubmitForm: (user, isSignup) =>
+      dispatch(actionCreator.auth(user, isSignup)),
   };
 };
 

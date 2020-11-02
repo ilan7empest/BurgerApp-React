@@ -5,4 +5,4 @@ export {
 } from './burgerBuilder';
 export { submitOrder, submitOrderInit } from './order';
 export { fetchOrdersInit, deleteOrder } from './getOrders';
-export { signup } from './auth';
+export { auth } from './auth';
