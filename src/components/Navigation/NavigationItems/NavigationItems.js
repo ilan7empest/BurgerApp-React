@@ -22,9 +22,15 @@ const navItems = (props) => (
     </ul>
     <ul className='navbar-nav'>
       <li className='nav-item'>
-        <NavLink to='/auth' className='nav-link'>
-          Signup
-        </NavLink>
+        {!props.isAuth ? (
+          <NavLink to='/auth' className='nav-link'>
+            Signup
+          </NavLink>
+        ) : (
+          <NavLink to='/logout' className='nav-link'>
+            Logout
+          </NavLink>
+        )}
       </li>
     </ul>
   </Fragment>

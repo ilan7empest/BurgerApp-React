@@ -21,7 +21,7 @@ const toolbar = (props) => (
         <span className='navbar-toggler-icon'></span>
       </button>
       <nav className={'navbar-collapse collapse ' + (props.show ? 'show' : '')}>
-        <NavItems active={props.active} />
+        <NavItems isAuth={props.isAuth} />
       </nav>
     </header>
   </Aux>
