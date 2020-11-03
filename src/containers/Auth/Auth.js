@@ -106,7 +106,7 @@ class Auth extends Component {
         value: e.target.value,
         valid: this.checkValidation(
           e.target.value,
-          this.state.controls[name].validation,
+          this.state.controls[name].validation
         ),
         touched: true,
       },
@@ -234,5 +234,5 @@ const mapDispacthToProps = (dispatch) => {
 
 export default connect(
   mapStateToProps,
-  mapDispacthToProps,
+  mapDispacthToProps
 )(withErrorHandler(Auth, axiosInstance));
