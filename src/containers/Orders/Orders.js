@@ -9,7 +9,7 @@ import Button from '../../components/UI/Button/Button';
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.onOrdersInit(this.props.tokenId);
+    this.props.onOrdersInit(this.props.tokenId, this.props.userId);
     // axiosInstance
     //   .get('orders.json')
     //   .then((res) => {
@@ -42,8 +42,7 @@ class Orders extends Component {
           <Button
             class='btn btn-danger'
             click={() => this.props.onOrderDelete(order.id)}
-            type='button'
-          >
+            type='button'>
             Delete Order
           </Button>
         </div>
@@ -59,17 +58,18 @@ const mapStateToProps = (state) => {
     orders: state.getOrdersReducer.orders,
     loading: state.getOrdersReducer.loading,
     tokenId: state.auth.tokenId,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onOrdersInit: (toekn) => dispatch(actionCreator.fetchOrdersInit(toekn)),
+    onOrdersInit: (token, userId) => dispatch(actionCreator.fetchOrdersInit(token, userId)),
     onOrderDelete: (id) => dispatch(actionCreator.deleteOrder(id)),
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withErrorHandler(Orders, axiosInstance));

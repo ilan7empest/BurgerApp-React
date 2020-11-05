@@ -123,10 +123,12 @@ class ContactData extends Component {
     for (let key in this.state.orderForm) {
       formData[key] = this.state.orderForm[key].value;
     }
+
     const Order = {
       ingredients: this.props.ingr,
       price: this.props.price.toFixed(2),
       costumerDetails: formData,
+      userId: this.props.userId,
     };
     this.props.onSubmitOrder(this.props.token, Order);
     // axiosInstance
@@ -147,7 +149,7 @@ class ContactData extends Component {
     updatedFormElement.value = e.target.value;
     updatedFormElement.valid = this.checkValidity(
       updatedFormElement.value,
-      updatedFormElement.validation,
+      updatedFormElement.validation
     );
     updatedFormElement.touched = true;
     updatedOrderForm[el] = updatedFormElement;
@@ -168,10 +170,7 @@ class ContactData extends Component {
       });
     }
     let form = (
-      <form
-        className='mt-3 shadow rounded p-3 p-md-5'
-        onSubmit={this.handleSubmit}
-      >
+      <form className='mt-3 shadow rounded p-3 p-md-5' onSubmit={this.handleSubmit}>
         <h3 className='mb-4'>Fill up your details</h3>
         <div className='form-row'>
           {formElementsArray.map((el) => {
@@ -208,17 +207,17 @@ const mapStateToProps = (state) => {
     price: state.burgerReducer.totalPrice,
     loading: state.orderReducer.loading,
     token: state.auth.tokenId,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSubmitOrder: (token, data) =>
-      dispatch(actionCreator.submitOrder(token, data)),
+    onSubmitOrder: (token, data) => dispatch(actionCreator.submitOrder(token, data)),
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(withErrorHandler(ContactData, axiosInstance));

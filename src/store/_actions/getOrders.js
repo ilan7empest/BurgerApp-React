@@ -26,11 +26,12 @@ export const deleteOrder = (orderId) => {
   };
 };
 
-export const fetchOrdersInit = (token) => {
+export const fetchOrdersInit = (token, userId) => {
   return (dispatch) => {
     dispatch(fetchOrdersStart());
+    const query = `auth=${token}&orderBy="userId"&equalTo="${userId}" `;
     axiosInstance
-      .get('orders.json?auth=' + token)
+      .get('orders.json?' + query)
       .then((res) => {
         const fetchOrders = [];
         for (let key in res.data) {
