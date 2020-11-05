@@ -20,7 +20,9 @@ const toolbar = (props) => (
       <button className='navbar-toggler' type='button' onClick={props.toggle}>
         <span className='navbar-toggler-icon'></span>
       </button>
-      <nav className={'navbar-collapse collapse ' + (props.show ? 'show' : '')}>
+      <nav
+        className={'navbar-collapse collapse ' + (props.show ? 'show' : '')}
+        onClick={props.toggle}>
         <NavItems isAuth={props.isAuth} />
       </nav>
     </header>

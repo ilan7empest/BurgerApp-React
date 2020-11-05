@@ -7,6 +7,8 @@ import axiosInstance from '../../axios-orders';
 import { connect } from 'react-redux';
 import * as actionCreator from '../../store/_actions';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import { updateObject } from '../../shared/utility';
+import { checkValidation } from '../../shared/validation';
 
 class Auth extends Component {
   state = {
@@ -62,6 +64,7 @@ class Auth extends Component {
           required: true,
           isNumeric: true,
           minLength: 5,
+          maxLength: 10,
         },
         valid: false,
         touched: false,
@@ -76,30 +79,11 @@ class Auth extends Component {
       this.props.onSetAuthRedirectPath();
     }
   }
-  checkValidation = (value, validationRules) => {
-    let isValid = true;
-    if (validationRules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-    if (validationRules.minLength) {
-      isValid = value.length >= validationRules.minLength && isValid;
-    }
-    if (validationRules.isEmail) {
-      const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-      isValid = regex.test(value) && isValid;
-    }
-    if (validationRules.isNumeric) {
-      const regex = /^\d+$/;
-      isValid = regex.test(value) && isValid;
-      console.log(isValid);
-    }
-    return isValid;
-  };
 
   handleFieldChange = (e, name) => {
     e.preventDefault();
     //1. copy the state controls + each control
-    const updatedControls = {
+    /*const updatedControls = {
       ...this.state.controls,
       [name]: {
         ...this.state.controls[name],
@@ -110,7 +94,7 @@ class Auth extends Component {
         ),
         touched: true,
       },
-    };
+    };*/
 
     // const updatedControls = { ...this.state.controls };
     // const updatedcontrolEl = { ...updatedControls[name] };
@@ -124,6 +108,14 @@ class Auth extends Component {
 
     // updatedcontrolEl.touched = true;
     // updatedControls[name] = updatedcontrolEl;
+
+    const updatedControls = updateObject(this.state.controls, {
+      [name]: updateObject(this.state.controls[name], {
+        value: e.target.value,
+        valid: checkValidation(e.target.value, this.state.controls[name].validation),
+        touched: true,
+      }),
+    });
 
     let formValid = true;
     //4. check each field if valid
@@ -195,8 +187,7 @@ class Auth extends Component {
     return (
       <form
         className='mt-3 shadow rounded p-3 p-md-5 d-inline-flex flex-column'
-        onSubmit={(e) => this.handleOnSubmit(e)}
-      >
+        onSubmit={(e) => this.handleOnSubmit(e)}>
         {authRedirect}
         {errorMsg}
         {createFields}
@@ -225,14 +216,9 @@ const mapStateToProps = (state) => {
 
 const mapDispacthToProps = (dispatch) => {
   return {
-    onSubmitForm: (user, isSignup) =>
-      dispatch(actionCreator.auth(user, isSignup)),
-    onSetAuthRedirectPath: () =>
-      dispatch(actionCreator.setAuthRedirectPath('/')),
+    onSubmitForm: (user, isSignup) => dispatch(actionCreator.auth(user, isSignup)),
+    onSetAuthRedirectPath: () => dispatch(actionCreator.setAuthRedirectPath('/')),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispacthToProps
-)(withErrorHandler(Auth, axiosInstance));
+export default connect(mapStateToProps, mapDispacthToProps)(withErrorHandler(Auth, axiosInstance));

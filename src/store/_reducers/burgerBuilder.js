@@ -1,5 +1,5 @@
 import * as actionTypes from '../_actions/actionTypes';
-import { updateObject } from '../utility';
+import { updateObject } from '../../shared/utility';
 const initialState = {
   ingredients: null,
   totalPrice: 4,
@@ -15,8 +15,7 @@ const addIngredient = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
   const updatedState = {
     ingredients: updatedIngredients,
-    totalPrice:
-      state.totalPrice + action.ingredient.price[action.ingredient.name],
+    totalPrice: state.totalPrice + action.ingredient.price[action.ingredient.name],
     building: true,
   };
   return updateObject(state, updatedState);
@@ -31,11 +30,9 @@ const reducer = (state = initialState, action) => {
         ...state,
         ingredients: {
           ...state.ingredients,
-          [action.ingredient.name]:
-            state.ingredients[action.ingredient.name] - 1,
+          [action.ingredient.name]: state.ingredients[action.ingredient.name] - 1,
         },
-        totalPrice:
-          state.totalPrice - action.ingredient.price[action.ingredient.name],
+        totalPrice: state.totalPrice - action.ingredient.price[action.ingredient.name],
         building: true,
       };
     case actionTypes.FETCH_INGREDIENTS:

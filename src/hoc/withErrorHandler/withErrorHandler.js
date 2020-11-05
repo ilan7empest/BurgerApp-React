@@ -18,7 +18,7 @@ const withErrorHandler = (WrapperComponent, axios) => {
         (res) => res,
         (err) => {
           this.setState({ error: err });
-        },
+        }
       );
     }
     componentWillUnmount() {
@@ -31,13 +31,8 @@ const withErrorHandler = (WrapperComponent, axios) => {
     render() {
       return (
         <Aux>
-          <Modal
-            isVisible={this.state.error}
-            closeModal={this.errorConfirmHandler}
-          >
-            <div className='modal-body'>
-              {this.state.error ? this.state.error.message : null}
-            </div>
+          <Modal isVisible={this.state.error} closeModal={this.errorConfirmHandler}>
+            <div className='modal-body'>{this.state.error ? this.state.error.message : null}</div>
           </Modal>
           <WrapperComponent {...this.props} />
         </Aux>

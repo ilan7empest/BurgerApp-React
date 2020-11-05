@@ -6,6 +6,8 @@ import * as actionCreator from '../../../store/_actions';
 import { Spinner } from '../../../components/UI/Spinner/Spinner';
 import { connect } from 'react-redux';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import { updateObject } from '../../../shared/utility';
+import { checkValidation } from '../../../shared/validation';
 
 class ContactData extends Component {
   state = {
@@ -99,23 +101,6 @@ class ContactData extends Component {
     formIsValid: false,
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (rules.required) {
-      //Comparison isValid is true if not an empty string. if not empty isValid equals the passed value
-      isValid = value.trim() !== '' && isValid;
-    }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    //return true || false
-    return isValid;
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     // this.setState({ loading: true });
@@ -144,21 +129,28 @@ class ContactData extends Component {
 
   handleData = (e, el) => {
     e.preventDefault();
-    const updatedOrderForm = { ...this.state.orderForm };
-    const updatedFormElement = { ...updatedOrderForm[el] };
-    updatedFormElement.value = e.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
-    );
-    updatedFormElement.touched = true;
-    updatedOrderForm[el] = updatedFormElement;
+    // const updatedOrderForm = { ...this.state.orderForm };
+    const updatedFormElement = updateObject(this.state.orderForm[el], {
+      value: e.target.value,
+      valid: checkValidation(e.target.value, this.state.orderForm[el].validation),
+      touched: true,
+    });
+    const updatedOrderForm = updateObject(this.state.orderForm, {
+      [el]: updatedFormElement,
+    });
+
+    // updatedFormElement.value = e.target.value;
+    // updatedFormElement.valid = this.checkValidity(
+    //   updatedFormElement.value,
+    //   updatedFormElement.validation
+    // );
+    // updatedFormElement.touched = true;
+    // updatedOrderForm[el] = updatedFormElement;
 
     let formIsValid = true;
     for (let key in updatedOrderForm) {
       formIsValid = updatedOrderForm[key].valid && formIsValid;
     }
-    console.log(formIsValid);
     this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
   };
   render() {
