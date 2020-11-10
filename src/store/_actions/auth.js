@@ -6,10 +6,11 @@ export const authStart = () => {
     type: actionTypes.AUTH_START,
   };
 };
-export const authSuccess = (res) => {
+export const authSuccess = ({ idToken, localId }) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    data: res,
+    token: idToken,
+    userId: localId,
   };
 };
 export const authFail = (error) => {

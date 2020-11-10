@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreator from './store/_actions';
 import Layout from './hoc/Layout/Layout';
-import BurgerBuilder from './containers/BurgerBuilder/BuregrBuilder';
+import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
