@@ -8,8 +8,11 @@ class Layout extends Component {
     showMenu: false,
   };
   handleToggleMenu = () => {
-    const show = this.state.showMenu;
-    this.setState({ showMenu: !show });
+    this.setState((state, _) => {
+      return {
+        showMenu: !state.showMenu,
+      };
+    });
   };
   render() {
     return (

@@ -109,7 +109,11 @@ class BurgerBuilder extends Component {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
     let orderSummary = null;
-    let burger = this.props.error ? <p>ingredients cant be loaded</p> : <Spinner />;
+    let burger = this.props.error ? (
+      <p>ingredients cant be loaded</p>
+    ) : (
+      <Spinner />
+    );
     if (this.props.ingr) {
       burger = (
         <Aux>
@@ -140,7 +144,9 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal isVisible={this.state.purchasing} closeModal={this.handleCloseModal}>
+        <Modal
+          isVisible={this.state.purchasing}
+          closeModal={this.handleCloseModal}>
           {orderSummary}
         </Modal>
         {burger}
@@ -160,14 +166,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleAddIngredient: (name) => dispatch(actionCreator.addIngredient(name, INGREDIENT_PRICE)),
+    handleAddIngredient: (name) =>
+      dispatch(actionCreator.addIngredient(name, INGREDIENT_PRICE)),
     handleRemoveIngredient: (name) =>
       dispatch(actionCreator.removeIngredient(name, INGREDIENT_PRICE)),
     handleFetchIngerients: () => {
       dispatch(actionCreator.initIngredients());
     },
     onInitPurchase: () => dispatch(actionCreator.submitOrderInit()),
-    onSetRedirectPath: (path) => dispatch(actionCreator.setAuthRedirectPath(path)),
+    onSetRedirectPath: (path) =>
+      dispatch(actionCreator.setAuthRedirectPath(path)),
   };
 };
 
